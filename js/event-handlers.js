@@ -1,4 +1,7 @@
+let draggedElement = null; // Declare draggedElement globally
+
 function handleDragStart(e) {
+    draggedElement = e.target; // Track the dragged element
     e.target.classList.add('dragging');
 }
 
@@ -8,7 +11,7 @@ function handleDragEnd(e) {
 }
 
 function handleDragOver(e) {
-    e.preventDefault();
+    e.preventDefault(); // Allow dropping
     if (e.target !== draggedElement) {
         e.target.classList.add('overlapping');
     }
@@ -21,20 +24,22 @@ function handleDragLeave(e) {
     }
 }
 
-function handleDrop(e, draggedElement, boxes, renderGrid) {
+function handleDrop(e, draggedElement, boxes, grid) {
     e.preventDefault();
     const targetElement = e.target;
+
     if (draggedElement !== targetElement) {
+        // Swap the boxes based on boxId
         swapBoxes(draggedElement, targetElement, boxes);
     }
     targetElement.classList.remove('overlapping');
     renderGrid(grid, boxes); // Re-render the grid after swapping
 }
 
-function attachBoxEvents(div, boxData, boxes, colors, grid) {
+function attachBoxEvents(div, boxData, boxes, grid) {
     div.addEventListener('click', function () {
         if (!boxData.confirmed) {
-            toggleBoxColor(div, boxData, colors); // Left-click: toggle color if not confirmed
+            toggleBoxColor(div, boxData, ["white", "yellow", "green", "blue", "purple"]); // Left-click: toggle color if not confirmed
         }
     });
 
@@ -48,6 +53,6 @@ function attachBoxEvents(div, boxData, boxes, colors, grid) {
     div.addEventListener('dragover', handleDragOver);
     div.addEventListener('dragleave', handleDragLeave);
     div.addEventListener('drop', function (e) {
-        handleDrop(e, div, boxes, renderGrid);
+        handleDrop(e, draggedElement, boxes, grid); // Handle the drop event
     });
 }

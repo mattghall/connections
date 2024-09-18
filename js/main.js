@@ -1,20 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const colors = ["white", "yellow", "green", "blue", "purple"];
     const grid = document.getElementById('grid');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const sortBtn = document.getElementById('sort-btn');
+    const clearBtn = document.getElementById('clear-btn');
     
-    // Initialize the boxes array
-    boxes.forEach((boxData, index) => {
-        boxData.color = "white";
-        boxData.confirmed = false;
+    // Initialize the boxes array with default properties
+    boxes.forEach((boxData) => {
+        boxData.color = "white"; // Default color
+        boxData.confirmed = false; // Default state is not confirmed
+    });
 
-        const div = document.createElement('div');
-        div.classList.add('box', 'white-guess');
-        div.textContent = boxData.text;
-        div.dataset.index = index;
+    // Initial rendering of the grid
+    renderGrid(grid, boxes);
 
-        // Attach events to the box
-        attachBoxEvents(div, boxData, boxes, colors, grid);
+    // Attach shuffle functionality to the shuffle button
+    shuffleBtn.addEventListener('click', function () {
+        shuffleBoxes(grid, boxes);
+    });
 
-        grid.appendChild(div);
+    sortBtn.addEventListener('click', function () {
+        sortBoxes(grid, boxes);
+    });
+
+    clearBtn.addEventListener('click', function () {
+        resetBoard(grid, boxes); // Reset the board
     });
 });

@@ -26,8 +26,6 @@ body {
     .box {
       width: 100%;
       height: auto;
-      padding-top: 50%; /* Makes the box square */
-      padding-bottom: 50%; /* Keeps text centered */
       position: relative;
     }
   }
@@ -43,6 +41,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 40%; /* Makes the box square */
+    padding-bottom: 40%; /* Keeps text centered */
   }
   
   .box div {
