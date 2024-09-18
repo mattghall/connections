@@ -147,3 +147,65 @@ body {
     background-color: rgba(128, 0, 128, 1.0);
   }
   
+
+  /* Full-width buttons */
+button {
+  width: 33%; /* Make buttons take up the full width */
+  font-size: 1rem;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px; /* Add some space between buttons */
+}
+
+button:hover {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background-color: #1897FF;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #006FDC;
+}
+
+.btn-secondary {
+  background-color: #FFB800;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #FF9500;
+}
+
+.btn-danger {
+  background-color: #F44336;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #D32F2F;
+}
+
+/* Footer styling */
+#footer-row {
+  margin-top: 50px;
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer-row .social a {
+  margin: 0 10px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.footer-row .social a:hover {
+  color: #FFB800;
+}

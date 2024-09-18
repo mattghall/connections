@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    feather.replace();
     const grid = document.getElementById('grid');
     const shuffleBtn = document.getElementById('shuffle-btn');
     const sortBtn = document.getElementById('sort-btn');
