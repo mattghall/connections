@@ -1,162 +1,172 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  /* Ensure the grid always has 4 columns, even on mobile */
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.game-btn {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Ensure the grid always has 4 columns, even on mobile */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 columns */
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+
+  /* Reduce gap between boxes and make them scale on smaller screens */
   .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns */
-    gap: 10px;
+    gap: 5px;
   }
-  
-  @media (max-width: 768px) {
-    /* Reduce gap between boxes and make them scale on smaller screens */
-    .grid {
-      gap: 5px;
-    }
-  
-    /* Your fix for mobile layout: padding 50% top and bottom to maintain centering */
-    .box {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-  }
-  
+
+  /* Your fix for mobile layout: padding 50% top and bottom to maintain centering */
   .box {
-    background-color: #e3e3e3;
-    border: 1px solid #ccc;
-    cursor: grab;
-    font-size: 18px;
-    user-select: none;
-    transition: box-shadow 0.3s ease;
+    width: 100%;
+    height: auto;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 40%; /* Makes the box square */
-    padding-bottom: 40%; /* Keeps text centered */
   }
-  
-  .box div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .box.dragging {
-    opacity: 0.5;
-  }
-  
-  .box.overlapping {
-    box-shadow: 0 0 15px 5px var(--box-shadow-color, rgba(0, 0, 255, 0.5)); /* Default shadow color is configurable here */
-  }
-  
+}
+
+.box {
+  background-color: #e3e3e3;
+  border: 1px solid #ccc;
+  cursor: grab;
+  font-size: 18px;
+  user-select: none;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40%;
+  /* Makes the box square */
+  padding-bottom: 40%;
+  /* Keeps text centered */
+}
+
+.box div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box.dragging {
+  opacity: 0.5;
+}
+
+.box.overlapping {
+  box-shadow: 0 0 15px 5px var(--box-shadow-color, rgba(0, 0, 255, 0.5));
+  /* Default shadow color is configurable here */
+}
+
+.data {
+  padding-left: 20px;
+}
+
+.category {
+  margin-bottom: 15px;
+}
+
+.color-select option {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Color dropdown options */
+.color-select option[value="yellow"] {
+  background-color: yellow;
+  color: yellow;
+}
+
+.color-select option[value="green"] {
+  background-color: green;
+  color: green;
+}
+
+.color-select option[value="blue"] {
+  background-color: blue;
+  color: blue;
+}
+
+.color-select option[value="purple"] {
+  background-color: purple;
+  color: purple;
+}
+
+@media (max-width: 768px) {
   .data {
-    padding-left: 20px;
+    margin-top: 20px;
   }
-  
-  .category {
-    margin-bottom: 15px;
-  }
-  
-  .color-select option {
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  /* Color dropdown options */
-  .color-select option[value="yellow"] {
-    background-color: yellow;
-    color: yellow;
-  }
-  
-  .color-select option[value="green"] {
-    background-color: green;
-    color: green;
-  }
-  
-  .color-select option[value="blue"] {
-    background-color: blue;
-    color: blue;
-  }
-  
-  .color-select option[value="purple"] {
-    background-color: purple;
-    color: purple;
-  }
-  
-  @media (max-width: 768px) {
-    .data {
-      margin-top: 20px;
-    }
-  }
-  
+}
+
 /* Default white color for all boxes */
 .box.white-guess {
-    background-color: rgba(255, 255, 255, 0.5); /* 50% opacity */
-  }
-  
-  .box.white-confirmed {
-    background-color: rgba(255, 255, 255, 1.0); /* 100% opacity */
-  }
-  
-  /* Color classes for guesses (50% opacity) */
-  .box.yellow-guess {
-    background-color: rgba(255, 255, 0, 0.5);
-  }
-  
-  .box.green-guess {
-    background-color: rgba(0, 128, 0, 0.5);
-  }
-  
-  .box.blue-guess {
-    background-color: rgba(0, 0, 255, 0.5);
-  }
-  
-  .box.purple-guess {
-    background-color: rgba(128, 0, 128, 0.5);
-  }
-  
-  /* Color classes for confirmed (100% opacity) */
-  .box.yellow-confirmed {
-    background-color: rgba(255, 255, 0, 1.0);
-  }
-  
-  .box.green-confirmed {
-    background-color: rgba(0, 128, 0, 1.0);
-  }
-  
-  .box.blue-confirmed {
-    background-color: rgba(0, 0, 255, 1.0);
-  }
-  
-  .box.purple-confirmed {
-    background-color: rgba(128, 0, 128, 1.0);
-  }
-  
+  background-color: rgba(255, 255, 255, 0.5);
+  /* 50% opacity */
+}
 
-  /* Full-width buttons */
+.box.white-confirmed {
+  background-color: rgba(255, 255, 255, 1.0);
+  /* 100% opacity */
+}
+
+/* Color classes for guesses (50% opacity) */
+.box.yellow-guess {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+
+.box.green-guess {
+  background-color: rgba(0, 128, 0, 0.5);
+}
+
+.box.blue-guess {
+  background-color: rgba(0, 166, 255, 0.7)
+}
+
+.box.purple-guess {
+  background-color: rgba(247, 0, 247, 0.5);
+}
+
+/* Color classes for confirmed (100% opacity) */
+.box.yellow-confirmed {
+  background-color: rgba(255, 255, 0, 1.0);
+}
+
+.box.green-confirmed {
+  background-color: rgba(0, 128, 0, 1.0);
+}
+
+.box.blue-confirmed {
+  background-color: rgb(0, 85, 255);
+}
+
+.box.purple-confirmed {
+  background-color: rgb(152, 0, 152);
+}
+
 button {
-  width: 33%; /* Make buttons take up the full width */
   font-size: 1rem;
   padding: 15px;
   border-radius: 5px;
   border: none;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  margin-bottom: 10px; /* Add some space between buttons */
+  margin-bottom: 10px;
+  /* Add some space between buttons */
 }
 
 button:hover {
