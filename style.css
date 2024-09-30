@@ -41,7 +41,6 @@ body {
   background-color: #e3e3e3;
   border: 1px solid #ccc;
   cursor: grab;
-  font-size: 18px;
   user-select: none;
   transition: box-shadow 0.3s ease;
   position: relative;
@@ -49,6 +48,9 @@ body {
   justify-content: center;
   align-items: center;
   padding-top: 40%;
+  overflow: hidden;
+  word-break: break-word;
+  text-align: center;
   /* Makes the box square */
   padding-bottom: 40%;
   /* Keeps text centered */
@@ -139,7 +141,7 @@ body {
 }
 
 .box.purple-guess {
-  background-color: rgba(247, 0, 247, 0.5);
+  background-color: rgba(128, 0, 128, 0.5);
 }
 
 /* Color classes for confirmed (100% opacity) */

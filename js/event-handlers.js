@@ -1,4 +1,45 @@
-let draggedElement = null; // Declare draggedElement globally
+let draggedElement = null;
+
+// Handle touch start (similar to drag start)
+function handleTouchStart(e) {
+    e.preventDefault(); // Prevent the default touch behavior (scrolling)
+    draggedElement = e.target; // Store the element being touched
+    draggedElement.classList.add('dragging');
+}
+
+// Handle touch move (we won’t need much here for swapping)
+function handleTouchMove(e) {
+    e.preventDefault(); // Prevent scrolling or default behavior
+    const touchLocation = e.touches[0];
+    const targetElement = document.elementFromPoint(touchLocation.clientX, touchLocation.clientY);
+
+    // Highlight the element being touched
+    if (targetElement && targetElement !== draggedElement) {
+        targetElement.classList.add('overlapping');
+    }
+}
+
+// Handle touch end (similar to drop)
+function handleTouchEnd(e) {
+    e.preventDefault(); // Prevent the default touch behavior
+    const touchLocation = e.changedTouches[0];
+    const targetElement = document.elementFromPoint(touchLocation.clientX, touchLocation.clientY);
+
+    // Swap elements if valid drop target
+    if (targetElement && draggedElement !== targetElement) {
+        swapBoxes(draggedElement, targetElement, boxes);
+    }
+
+    // Clean up styles
+    if (draggedElement) {
+        draggedElement.classList.remove('dragging');
+    }
+    if (targetElement) {
+        targetElement.classList.remove('overlapping');
+    }
+
+    draggedElement = null; // Clear the dragged element
+}
 
 function handleDragStart(e) {
     draggedElement = e.target; // Track the dragged element
@@ -55,4 +96,8 @@ function attachBoxEvents(div, boxData, boxes, grid) {
     div.addEventListener('drop', function (e) {
         handleDrop(e, draggedElement, boxes, grid); // Handle the drop event
     });
+    // Attach touch events for mobile
+    div.addEventListener('touchstart', handleTouchStart);
+    div.addEventListener('touchmove', handleTouchMove);
+    div.addEventListener('touchend', handleTouchEnd);
 }
