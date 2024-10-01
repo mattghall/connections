@@ -1,3 +1,16 @@
+#style-version-span:after {
+  content: '1.0';
+}
+
+.logDivs {
+  font-family: monospace;
+  white-space: pre;
+  background-color: #ccc;
+  color: black;
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;

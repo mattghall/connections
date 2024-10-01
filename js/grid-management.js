@@ -1,3 +1,10 @@
+const gridManagementVersion = 1.0;
+
+$(function() {
+    $("#grid-management-version-span").text(gridManagementVersion);
+});
+
+
 function renderGrid(grid, boxes) {
     grid.innerHTML = ''; // Clear the grid
     boxes.forEach((boxData) => {
@@ -17,6 +24,7 @@ function renderGrid(grid, boxes) {
 function swapBoxes(el1, el2, boxes) {
     const boxId1 = el1.dataset.boxId;
     const boxId2 = el2.dataset.boxId;
+    logMe("Swapping " + el1.textContent + " & " + el2.textContent);
 
     const index1 = boxes.findIndex(box => box.boxId == boxId1);
     const index2 = boxes.findIndex(box => box.boxId == boxId2);
