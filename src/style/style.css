@@ -1,5 +1,5 @@
 #style-version-span:after {
-  content: '1.0';
+  content: '1.2';
 }
 
 .logDivs {
@@ -9,6 +9,11 @@
   color: black;
   overflow-y: scroll;
   max-height: 200px;
+  text-align: left !important;
+}
+
+#boxes-column {
+  font-size: xx-small;
 }
 
 body {
@@ -82,11 +87,11 @@ body {
 
 .box.dragging {
   opacity: 0.5;
+  box-shadow: 0 0 15px 5px var(--box-shadow-color, rgba(0, 0, 0, 0.5));
 }
 
 .box.overlapping {
   box-shadow: 0 0 15px 5px var(--box-shadow-color, rgba(0, 0, 255, 0.5));
-  /* Default shadow color is configurable here */
 }
 
 .data {
@@ -233,4 +238,46 @@ button:hover {
 
 .footer-row .social a:hover {
   color: #FFB800;
+}
+
+.lock.disabled {
+  color: gray;
+  border-color: gray;
+}
+
+.locked {
+  color: black !important;
+  border-color: black !important;
+}
+
+.unlocked {
+  background-color: white !important;
+}
+
+.lock-yellow,
+.lock-yellow:hover {
+  color: #FFB800;
+  background-color: #FFB800;
+  border-color: #FFB800;
+}
+
+.lock-green,
+.lock-green:hover {
+  color: #4b7a00;
+  background-color: #4b7a00;
+  border-color: #4b7a00;
+}
+
+.lock-blue,
+.lock-blue:hover {
+  color: #006FDC;
+  background-color: #006FDC;
+  border-color: #006FDC;
+}
+
+.lock-purple,
+.lock-purple:hover {
+  color: blueviolet;
+  background-color: blueviolet;
+  border-color: blueviolet;
 }
