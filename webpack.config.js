@@ -3,12 +3,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    main: './src/js/main.js',  // This entry point should be correct
+    main: './src/js/main.js', 
   },
   output: {
     filename: '[name].bundle.js',  // This should generate main.bundle.js
-    path: path.resolve(__dirname, 'dist/js'),  // Ensure this path is correct
+    path: path.resolve(__dirname, 'dist/js'), 
   },
+  // devtool: 'source-map',
   module: {
     rules: [
       {
@@ -26,5 +27,4 @@ module.exports = {
     }),
   ],
   mode: 'production',
-  // devtool: 'source-map',
 };

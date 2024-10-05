@@ -4,6 +4,8 @@ importAll(require.context('../style', false, /\.css$/));
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import feather from 'feather-icons';
 import { logMe, toggleDebug, debugMode } from './logger.js';
+const mainJsVersion = 1.3;
+const apiUrl = 'https://mj3c9f7sje.execute-api.us-west-2.amazonaws.com/default/connections-scraper';
 
 function importAll(r) {
     r.keys().forEach(r);
@@ -29,7 +31,7 @@ function renderGrid() {
 
         $('#grid').append(div);
     });
-    updateLocks()
+    updateLocks();
 }
 
 export function swapBoxes(el1, el2) {
@@ -98,12 +100,16 @@ function resetBoard() {
         box.confirmed = false; // Reset confirmed to false
     });
 
+    colors.forEach(color => {
+        if (color == "white") return;
+        unlockColor(color);
+    });
+
     // Re-render the grid with the reset boxes
     renderGrid();
 }
 
-const mainJsVersion = 1.2;
-const apiUrl = 'https://mj3c9f7sje.execute-api.us-west-2.amazonaws.com/default/connections-scraper';
+
 
 
 function toggleBoxColor(box, boxData) {
@@ -256,6 +262,7 @@ $(function () {
         logMe("Opening debug console");
     });
 
+    // Enable the lock buttons
     $('.icon-clickable').on('click', function (event) {
         if ($(this).hasClass('disabled')) return;
 
@@ -266,33 +273,43 @@ $(function () {
         let color = colorMatch[1];
 
         if ($(this).get(0).classList.contains("unlocked")) {
-            logMe("Locking " + color);
-            for (let i = 0; i < boxes.length; i++) {
-                if (boxes[i].color === color) {
-                    boxes[i].confirmed = true;
-                }
-            }
-            $(this).addClass("locked")
-            $(this).removeClass("unlocked")
-            $($(this).children().get(1)).addClass("d-none");
-            $($(this).children().get(0)).removeClass("d-none");
-            lockedColor[color] = true;
+            lockColor(color);
         } else {
-            logMe("Unlocking " + color);
-            for (let i = 0; i < boxes.length; i++) {
-                if (boxes[i].color === color) {
-                    boxes[i].confirmed = false;
-                }
-            }
-            $(this).addClass("unlocked")
-            $(this).removeClass("locked")
-            $($(this).children().get(0)).addClass("d-none");
-            $($(this).children().get(1)).removeClass("d-none");
-            lockedColor[color] = false;
+            unlockColor(color);
         }
         renderGrid();
     });
 });
+
+function unlockColor(color) {
+    let that = $(".lock-" + color)[0]
+    logMe("Unlocking " + color);
+    for (let i = 0; i < boxes.length; i++) {
+        if (boxes[i].color === color) {
+            boxes[i].confirmed = false;
+        }
+    }
+    $(that).addClass("unlocked");
+    $(that).removeClass("locked");
+    $($(that).children().get(0)).addClass("d-none");
+    $($(that).children().get(1)).removeClass("d-none");
+    lockedColor[color] = false;
+}
+
+function lockColor(color) {
+    let that = $(".lock-" + color)[0]
+    logMe("Locking " + color);
+    for (let i = 0; i < boxes.length; i++) {
+        if (boxes[i].color === color) {
+            boxes[i].confirmed = true;
+        }
+    }
+    $(that).addClass("locked");
+    $(that).removeClass("unlocked");
+    $($(that).children().get(1)).addClass("d-none");
+    $($(that).children().get(0)).removeClass("d-none");
+    lockedColor[color] = true;
+}
 
 function getCurrentDateFormatted() {
     const today = new Date();
