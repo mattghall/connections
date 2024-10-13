@@ -1,3 +1,68 @@
+:root {
+  --yellow-color: yellow;
+  --yellow-guess-color: #f9df6d;
+  --green-color: green;
+  --green-guess-color: #a0c35a;
+  --blue-color: blue;
+  --blue-guess-color: #b0c4ef;
+  --purple-color: purple;
+  --purple-guess-color: #ba81c5;
+  --white-color: white;
+  --white-guess-color: white;
+  --ccc-color: #ccc;
+  --blue-hover-color: #006FDC;
+  --black-color: black;
+  --box-background-color: #e3e3e3;
+}
+
+/* @media only screen and (orientation: landscape) {
+  body {
+    transform: rotate(90deg);
+    width: 100vh;
+    height: 100vw;
+    overflow: hidden;
+  }
+} */
+
+#footer-row > div {
+  min-width: 600px;
+  overflow: hidden;
+}
+
+/* Minimum aspect ratio */
+@media (max-aspect-ratio: 2/1) {
+  body {
+    background: #9af !important; /* blue */
+  }
+
+  .box {
+    padding-top: 20% !important;
+    padding-bottom: 20% !important;
+  }
+}
+
+/* Maximum aspect ratio */
+@media (max-aspect-ratio: 2/3) {
+  body {
+    background: #9ff !important; /* cyan */
+  }
+  .box {
+    padding-top: 30% !important;
+    padding-bottom: 30% !important;
+  }
+}
+
+/* Exact aspect ratio, put it at the bottom to avoid override*/
+@media (max-aspect-ratio: 2/4) {
+  body {
+    background: #f9a !important; /* red */
+  }
+  .box {
+    padding-top: 50% !important;
+    padding-bottom: 50% !important;
+  }
+}
+
 #style-version-span:after {
   content: '1.2';
 }
@@ -5,8 +70,8 @@
 .logDivs {
   font-family: monospace;
   white-space: pre;
-  background-color: #ccc;
-  color: black;
+  background-color: var(--ccc-color);
+  color: var(--black-color);
   overflow-y: scroll;
   max-height: 200px;
   text-align: left !important;
@@ -56,8 +121,8 @@ body {
 }
 
 .box {
-  background-color: #e3e3e3;
-  border: 1px solid #ccc;
+  background-color: var(--box-background-color);
+  border: 1px solid --ccc-color;
   cursor: grab;
   user-select: none;
   transition: box-shadow 0.3s ease;
@@ -109,23 +174,23 @@ body {
 
 /* Color dropdown options */
 .color-select option[value="yellow"] {
-  background-color: yellow;
-  color: yellow;
+  background-color: var(--yellow-color);
+  color: var(--yellow-color);
 }
 
 .color-select option[value="green"] {
-  background-color: green;
-  color: green;
+  background-color: var(--green-color);
+  color: var(--green-color);
 }
 
 .color-select option[value="blue"] {
-  background-color: blue;
-  color: blue;
+  background-color: var(--blue-color);
+  color: var(--blue-color);
 }
 
 .color-select option[value="purple"] {
-  background-color: purple;
-  color: purple;
+  background-color: var(--purple-color);
+  color: var(--purple-color);
 }
 
 @media (max-width: 768px) {
@@ -136,47 +201,47 @@ body {
 
 /* Default white color for all boxes */
 .box.white-guess {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: var(--white-guess-color);
   /* 50% opacity */
 }
 
 .box.white-confirmed {
-  background-color: rgba(255, 255, 255, 1.0);
+  background-color: var(--white-color);
   /* 100% opacity */
 }
 
 /* Color classes for guesses (50% opacity) */
 .box.yellow-guess {
-  background-color: rgba(255, 255, 0, 0.5);
+  background-color: var(--yellow-guess-color);
 }
 
 .box.green-guess {
-  background-color: rgba(0, 128, 0, 0.5);
+  background-color: var(--green-guess-color);
 }
 
 .box.blue-guess {
-  background-color: rgba(0, 166, 255, 0.7)
+  background-color: var(--blue-guess-color);
 }
 
 .box.purple-guess {
-  background-color: rgba(128, 0, 128, 0.5);
+  background-color: var(--purple-guess-color);
 }
 
 /* Color classes for confirmed (100% opacity) */
 .box.yellow-confirmed {
-  background-color: rgba(255, 255, 0, 1.0);
+  background-color: var(--yellow-color);
 }
 
 .box.green-confirmed {
-  background-color: rgba(0, 128, 0, 1.0);
+  background-color: var(--green-color);
 }
 
 .box.blue-confirmed {
-  background-color: rgb(0, 85, 255);
+  background-color: var(--blue-color);
 }
 
 .box.purple-confirmed {
-  background-color: rgb(152, 0, 152);
+  background-color: var(--purple-color);
 }
 
 button {
@@ -270,14 +335,14 @@ button:hover {
 
 .lock-blue,
 .lock-blue:hover {
-  color: #006FDC;
+  color: var(--blue-hover-color);
   background-color: #006FDC;
   border-color: #006FDC;
 }
 
 .lock-purple,
 .lock-purple:hover {
-  color: blueviolet;
-  background-color: blueviolet;
-  border-color: blueviolet;
+  color: var(--blue-color)violet;
+  background-color: var(--blue-color)violet;
+  border-color: var(--blue-color)violet;
 }

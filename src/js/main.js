@@ -30,6 +30,7 @@ function renderGrid() {
         attachBoxEvents(div, boxData, boxes, $('#grid'));
 
         $('#grid').append(div);
+        adjustFontSize(div);
     });
     updateLocks();
 }
@@ -281,6 +282,37 @@ $(function () {
     });
 });
 
+
+// Function to dynamically adjust font size based on box content
+function adjustFontSize(box) {
+    let fontSize = 16; // Starting font size in px
+    const boxWidth = box.offsetWidth;
+    const boxHeight = box.offsetHeight;
+
+    // Get the box's content
+    let content = box.innerText || box.textContent;
+    const tempDiv = document.createElement('div');
+
+    // Create a temporary div to measure the text size
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.style.fontSize = fontSize + 'px';
+    tempDiv.innerHTML = content;
+    document.body.appendChild(tempDiv);
+
+    // Reduce font size until text fits within the box
+    while ((tempDiv.offsetWidth > boxWidth || tempDiv.offsetHeight > boxHeight) && fontSize > 10) {
+        fontSize--;
+        tempDiv.style.fontSize = fontSize + 'px';
+    }
+
+    // Set the final font size
+    box.style.fontSize = fontSize + 'px';
+
+    // Remove the temporary div
+    document.body.removeChild(tempDiv);
+}
+
 function unlockColor(color) {
     let that = $(".lock-" + color)[0]
     logMe("Unlocking " + color);
@@ -324,7 +356,7 @@ const defaultWords = [
     "APPLE", "BANANA", "CHERRY", "ORANGE",
     "RABBIT", "CAT", "FROG", "TURTLE",
     "COKE", "SPRITE", "7-UP", "PEPSI",
-    "MOUSE", "KEYBOARD", "MONITOR", "MIC"
+    "MOUSE", "WIRELESS KEYBOARD", "MONITOR", "MIC"
 ];
 
 let draggedElement = null;
