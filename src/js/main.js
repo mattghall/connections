@@ -33,6 +33,7 @@ function renderGrid() {
         adjustFontSize(div);
     });
     updateLocks();
+    adjustPageSize();
 }
 
 export function swapBoxes(el1, el2) {
@@ -110,9 +111,6 @@ function resetBoard() {
     renderGrid();
 }
 
-
-
-
 function toggleBoxColor(box, boxData) {
     let unlockedColors = Object.keys(lockedColor).filter(color => lockedColor[color] === false);
 
@@ -173,6 +171,41 @@ function updateLocks() {
 //         boxesColumn.innerHTML = text; // Set the innerHTML to the concatenated string
 //     }
 // }
+
+function adjustPageSize() {
+    const htmlHeight = $("html").height();
+    const htmlWidth = $("html").width();
+    const htmlAspectRatio = htmlWidth / htmlHeight;
+    const bodyHeight = $("body").height();
+    const bodyWidth = $("body").width();
+    const bodyAspectRatio = bodyWidth / bodyHeight;
+    const gameHeight = $("body > .container").height();
+    const gameWidth = $("body > .container").width();
+    const gameAspectRatio = gameWidth / gameHeight;
+    const gridHeight = $("#grid").height();
+    const containerHeight = $("body > .container").height();
+    const gameDivHeight = $("#game-div").height();
+
+    const usableHeight = htmlHeight - 80;
+
+    var boxPadding = $(".box").css("padding-top").replace("px", "");
+
+    console.log({ htmlHeight, htmlWidth, htmlAspectRatio, bodyHeight, bodyWidth, bodyAspectRatio, gameHeight, gameWidth, gameAspectRatio, gridHeight, containerHeight });
+
+    if (gameDivHeight > usableHeight) {
+        var diff = gameDivHeight - usableHeight;
+        console.log("diff: " + diff);
+        var padding = boxPadding - diff / 8;
+        $(".box").css("padding-top", padding + "px");
+        $(".box").css("padding-bottom", padding + "px");
+    } else {
+        var diff = usableHeight - gameDivHeight;
+        console.log("diff: " + diff);
+        var padding = boxPadding + diff / 8;
+        $(".box").css("padding-top", padding + "px");
+        $(".box").css("padding-bottom", padding + "px");
+    }
+}
 
 $(function () {
     feather.replace();

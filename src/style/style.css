@@ -31,9 +31,9 @@
 
 /* Minimum aspect ratio */
 @media (max-aspect-ratio: 2/1) {
-  body {
-    background: #9af !important; /* blue */
-  }
+  /* body {
+    background: #9af !important;
+  } */
 
   .box {
     padding-top: 20% !important;
@@ -43,9 +43,9 @@
 
 /* Maximum aspect ratio */
 @media (max-aspect-ratio: 2/3) {
-  body {
-    background: #9ff !important; /* cyan */
-  }
+  /* body {
+    background: #9ff !important; 
+  } */
   .box {
     padding-top: 30% !important;
     padding-bottom: 30% !important;
@@ -54,9 +54,9 @@
 
 /* Exact aspect ratio, put it at the bottom to avoid override*/
 @media (max-aspect-ratio: 2/4) {
-  body {
-    background: #f9a !important; /* red */
-  }
+  /* body {
+    background: #f9a !important;
+  } */
   .box {
     padding-top: 50% !important;
     padding-bottom: 50% !important;
@@ -64,7 +64,7 @@
 }
 
 #style-version-span:after {
-  content: '1.2';
+  content: '1.3';
 }
 
 .logDivs {
@@ -229,19 +229,33 @@ body {
 
 /* Color classes for confirmed (100% opacity) */
 .box.yellow-confirmed {
-  background-color: var(--yellow-color);
+  background-color: var(--yellow-guess-color);
+  background: linear-gradient(225deg, var(--yellow-guess-color), #f9d84a, var(--yellow-guess-color))
 }
 
 .box.green-confirmed {
-  background-color: var(--green-color);
+  background-color: var(--green-guess-color);
+  background: linear-gradient(225deg, var(--green-guess-color), #76c959, var(--green-guess-color))
+
 }
 
 .box.blue-confirmed {
-  background-color: var(--blue-color);
+  background-color: var(--blue-guess-color);
+  background: linear-gradient(225deg, var(--blue-guess-color), #b0e2ff, var(--blue-guess-color))
+
+
 }
 
 .box.purple-confirmed {
-  background-color: var(--purple-color);
+  background-color: var(--purple-guess-color);
+  background: linear-gradient(225deg, var(--purple-guess-color), #e498ff, var(--purple-guess-color))
+
+}
+
+[class$="-confirmed"] {
+  border-width: 3px !important;
+  font-weight: bold;
+  font-style: italic;
 }
 
 button {
@@ -290,7 +304,7 @@ button:hover {
   margin-top: 50px;
   background-color: #333;
   color: white;
-  padding: 20px 0;
+  padding: 5px 0;
   text-align: center;
   font-size: 14px;
 }
@@ -321,28 +335,28 @@ button:hover {
 
 .lock-yellow,
 .lock-yellow:hover {
-  color: #FFB800;
-  background-color: #FFB800;
-  border-color: #FFB800;
+  color: var(--yellow-guess-color);
+  background-color: var(--yellow-guess-color);
+  border-color: var(--yellow-guess-color);
 }
 
 .lock-green,
 .lock-green:hover {
-  color: #4b7a00;
-  background-color: #4b7a00;
-  border-color: #4b7a00;
+  color: var(--green-guess-color);
+  background-color: var(--green-guess-color);
+  border-color: var(--green-guess-color);
 }
 
 .lock-blue,
 .lock-blue:hover {
   color: var(--blue-hover-color);
-  background-color: #006FDC;
-  border-color: #006FDC;
+  background-color: var(--blue-hover-color);
+  border-color: var(--blue-hover-color);
 }
 
 .lock-purple,
 .lock-purple:hover {
-  color: var(--blue-color)violet;
-  background-color: var(--blue-color)violet;
-  border-color: var(--blue-color)violet;
+  color: var(--purple-guess-color);
+  background-color: var(--purple-guess-color);
+  border-color: var(--purple-guess-color);
 }

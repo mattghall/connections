@@ -39,10 +39,9 @@
     <div class="container mt-5 mt-md-3">
         <div class="row">
             <div class="col-12 col-lg-6 offset-lg-3">
-                <div class="row">
-
+                <div id="game-div" class="row">
                     <div class="col-12">
-                        <div class="row">
+                        <div id="buttons-div" class="row">
                             <div class="col-6 col-sm-3">
                                 <button id="shuffle-btn" class="game-btn btn btn-primary">Shuffle</button>
                             </div>
@@ -60,36 +59,36 @@
                     <div id="grid" class="grid col-12 mt-3">
                         <!-- Boxes will be created dynamically -->
                     </div>
-                    <div class="col-12 mt-2">
-                        <div class="row">
-                            <!-- First Icon -->
-                            <div class="col text-center">
-                                <a href="#" class="icon-clickable btn lock lock-yellow unlocked disabled">
-                                    <i data-feather="lock" class="d-none"></i>
-                                    <i data-feather="unlock"></i>
-                                </a>
-                            </div>
-                            <!-- Second Icon -->
-                            <div class="col text-center">
-                                <a href="#" class="icon-clickable btn lock lock-green unlocked disabled">
-                                    <i data-feather="lock" class="d-none"></i>
-                                    <i data-feather="unlock"></i>
-                                </a>
-                            </div>
-                            <!-- Third Icon -->
-                            <div class="col text-center">
-                                <a href="#" class="icon-clickable btn lock lock-blue unlocked disabled">
-                                    <i data-feather="lock" class="d-none"></i>
-                                    <i data-feather="unlock"></i>
-                                </a>
-                            </div>
-                            <!-- Fourth Icon -->
-                            <div class="col text-center">
-                                <a href="#" class="icon-clickable btn lock lock-purple unlocked disabled">
-                                    <i data-feather="lock" class="d-none"></i>
-                                    <i data-feather="unlock"></i>
-                                </a>
-                            </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="row">
+                        <!-- First Icon -->
+                        <div class="col text-center">
+                            <a href="#" class="icon-clickable btn lock lock-yellow unlocked disabled">
+                                <i data-feather="lock" class="d-none"></i>
+                                <i data-feather="unlock"></i>
+                            </a>
+                        </div>
+                        <!-- Second Icon -->
+                        <div class="col text-center">
+                            <a href="#" class="icon-clickable btn lock lock-green unlocked disabled">
+                                <i data-feather="lock" class="d-none"></i>
+                                <i data-feather="unlock"></i>
+                            </a>
+                        </div>
+                        <!-- Third Icon -->
+                        <div class="col text-center">
+                            <a href="#" class="icon-clickable btn lock lock-blue unlocked disabled">
+                                <i data-feather="lock" class="d-none"></i>
+                                <i data-feather="unlock"></i>
+                            </a>
+                        </div>
+                        <!-- Fourth Icon -->
+                        <div class="col text-center">
+                            <a href="#" class="icon-clickable btn lock lock-purple unlocked disabled">
+                                <i data-feather="lock" class="d-none"></i>
+                                <i data-feather="unlock"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -99,7 +98,7 @@
 
     <div id="footer-row" class="row justify-content-center bg-dark text-white">
         <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-            games.mattghall.com - <span class="version-span">3.3.3</span>
+            games.mattghall.com - <span class="version-span">3.3.4</span>
         </div>
         <div class="col-4 text-center px-1 px-md-2 pt-1 fileVersions" style="display: none">
             main.js <span id="main-version-span">x.x</span><br />
