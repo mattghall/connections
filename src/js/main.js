@@ -212,6 +212,16 @@ $(function () {
 
     $("#main-version-span").text(mainJsVersion);
 
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(error) {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+    }
+
     // Function to fetch words from the API
     async function fetchWords(date = '') {
         try {
@@ -314,7 +324,6 @@ $(function () {
         renderGrid();
     });
 });
-
 
 // Function to dynamically adjust font size based on box content
 function adjustFontSize(box) {
