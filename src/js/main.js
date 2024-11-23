@@ -3,7 +3,6 @@ importAll(require.context('../style', false, /\.css$/));
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import feather from 'feather-icons';
-import { logMe, toggleDebug, debugMode } from './logger.js';
 const mainJsVersion = 1.3;
 const apiUrl = 'https://mj3c9f7sje.execute-api.us-west-2.amazonaws.com/default/connections-scraper';
 
@@ -34,12 +33,13 @@ function renderGrid() {
     });
     updateLocks();
     adjustPageSize();
+    endLoading();
 }
 
 export function swapBoxes(el1, el2) {
     const boxId1 = el1.dataset.boxId;
     const boxId2 = el2.dataset.boxId;
-    logMe("Swapping " + el1.textContent + " & " + el2.textContent);
+    console.log("Swapping " + el1.textContent + " & " + el2.textContent);
 
     const index1 = boxes.findIndex(box => box.boxId == boxId1);
     const index2 = boxes.findIndex(box => box.boxId == boxId2);
@@ -51,7 +51,13 @@ export function swapBoxes(el1, el2) {
 
     renderGrid();
 }
+function startLoading() {
+    $('#loading-overlay').fadeIn('slow');
+}
 
+function endLoading() {
+    $('#loading-overlay').fadeOut('slow');
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -96,6 +102,7 @@ function sortBoxes() {
 }
 
 function resetBoard() {
+    startLoading();
     // Reset each box to its default state
     boxes.forEach(box => {
         box.color = "white"; // Reset color to white
@@ -128,10 +135,9 @@ function updateBoxClass(box, boxData) {
     const colorClass = boxData.color + (boxData.confirmed ? '-confirmed' : '-guess');
     box.classList.remove(...colors.map(color => color + '-guess'), ...colors.map(color => color + '-confirmed'));
     box.classList.add(colorClass)
-    logMe("Color Update: " + box.textContent + " → " + boxData.color);
+    console.log("Color Update: " + box.textContent + " → " + boxData.color);
     updateLocks();
 }
-
 
 function updateLocks() {
     for (let selectedColor of colors) {
@@ -143,34 +149,14 @@ function updateLocks() {
         if (isDisabled) {
             if (shouldEnable) {
                 $(className).removeClass("disabled");
-                logMe("Enabling Lock " + selectedColor);
+                console.log("Enabling Lock " + selectedColor);
             }
         } else if (boxes.filter(box => box.color === selectedColor).length !== 4) {
             $(className).addClass("disabled");
-            logMe("Disabling Lock " + selectedColor);
+            console.log("Disabling Lock " + selectedColor);
         }
     }
 }
-
-// For late debugging if needbe
-// function printBoxesArray() {
-//     if (debugMode) {
-//         const boxesColumn = document.getElementById('boxes-column');
-//         boxesColumn.innerHTML = ''; // Clear existing content
-//         var text = "";
-//         boxes.forEach(box => {
-//             const boxString = JSON.stringify(box, null, 2); // Convert box to JSON string with indentation
-//             const coloredBoxString = boxString.replace(/"color": "(\w+)"/, (_match, color) => {
-//                 return `"color": "<span style='background-color:${color}; color: black;'>${color}</span>"`;
-//             }).replace(/"confirmed": (true|false)/, (_match, confirmed) => {
-//                 return `"confirmed": "<span style='color:${confirmed === 'true' ? 'green' : 'red'}'>${confirmed}</span>"`;
-//             });
-
-//             text += coloredBoxString + "<br/>";
-//         });
-//         boxesColumn.innerHTML = text; // Set the innerHTML to the concatenated string
-//     }
-// }
 
 function adjustPageSize() {
     const htmlHeight = $("html").height();
@@ -209,6 +195,9 @@ function adjustPageSize() {
 
 $(function () {
     feather.replace();
+    $('#loading-overlay').show();
+    document.body.style.overflow = 'hidden'; // Disable scrolling
+
 
     $("#main-version-span").text(mainJsVersion);
 
@@ -226,14 +215,14 @@ $(function () {
     async function fetchWords(date = '') {
         try {
             const url = date ? `${apiUrl}?date=${date}` : apiUrl;
-            logMe("Fetching " + url);
+            console.log("Fetching " + url);
             const response = await fetch(url);
             const data = await response.json();
 
             // Assuming the API returns an array of words in the response
             return data;
         } catch (error) {
-            logMe('Error fetching words:', error);
+            console.log('Error fetching words:', error);
             return []; // Return an empty array if the API call fails
         }
     }
@@ -244,7 +233,7 @@ $(function () {
 
         // If fetch fails, use default words and display an error message
         if (!fetchedWords || fetchedWords.hasOwnProperty("error") || fetchedWords.length === 0) {
-            logMe("Could not fetch data from NYT connections. Using default word list.");
+            console.log("Could not fetch data from NYT connections. Using default word list.");
             fetchedWords = defaultWords; // Fall back to the default words
         } else {
             console.log(fetchedWords);
@@ -274,26 +263,27 @@ $(function () {
     // Attach shuffle functionality to the shuffle button
     $('#shuffle-btn').on('click', function () {
         shuffleBoxes(); // jQuery returns a wrapped set, use [0] for the DOM element
-        logMe("Shuffle");
+        console.log("Shuffle");
     });
 
     // Attach sort functionality to the sort button
     $('#sort-btn').on('click', function () {
         sortBoxes(); // Use [0] to get the actual DOM element
-        logMe("Sort");
+        console.log("Sort");
     });
 
     // Attach clear functionality to the clear button
     $('#clear-btn').on('click', function () {
         resetBoard(); // Use [0] to get the actual DOM element
-        logMe("Clear");
+        console.log("Clear");
     });
 
     // Automatically fetch and load words when the date picker value changes
     $('#date-picker').on('change', function () {
+        startLoading();
         const selectedDate = $('#date-picker').val(); // Use jQuery to get the value
         if (selectedDate) {
-            logMe("Resetting board for new date " + selectedDate);
+            console.log("Resetting board for new date " + selectedDate);
             initializeGame(selectedDate); // Fetch words for the selected date
         } else {
             alert("Please select a valid date.");
@@ -303,7 +293,7 @@ $(function () {
     $(".version-span").on("click", function () {
         $(".fileVersions").toggle();
         toggleDebug();
-        logMe("Opening debug console");
+        console.log("Opening debug console");
     });
 
     // Enable the lock buttons
@@ -322,6 +312,11 @@ $(function () {
             unlockColor(color);
         }
         renderGrid();
+    });
+
+    // Disable drag event on footer and body
+    $('body, #footer-row').on('dragstart', function(event) {
+        event.preventDefault();
     });
 });
 
@@ -357,7 +352,7 @@ function adjustFontSize(box) {
 
 function unlockColor(color) {
     let that = $(".lock-" + color)[0]
-    logMe("Unlocking " + color);
+    console.log("Unlocking " + color);
     for (let i = 0; i < boxes.length; i++) {
         if (boxes[i].color === color) {
             boxes[i].confirmed = false;
@@ -372,7 +367,7 @@ function unlockColor(color) {
 
 function lockColor(color) {
     let that = $(".lock-" + color)[0]
-    logMe("Locking " + color);
+    console.log("Locking " + color);
     for (let i = 0; i < boxes.length; i++) {
         if (boxes[i].color === color) {
             boxes[i].confirmed = true;
@@ -405,7 +400,7 @@ let draggedElement = null;
 let touchStart = 0;
 
 function handleTouchStart(e) {
-    logMe("Touch start: " + e.target.textContent);
+    console.log("Touch start: " + e.target.textContent);
     e.preventDefault(); // Prevent the default touch behavior (scrolling)
     draggedElement = e.target; // Store the element being touched
     $(draggedElement).addClass('dragging');
@@ -413,7 +408,7 @@ function handleTouchStart(e) {
 }
 
 function handleTouchMove(e) {
-    logMe("Touch move: " + e.target.textContent);
+    console.log("Touch move: " + e.target.textContent);
     e.preventDefault(); // Prevent scrolling or default behavior
     const touchLocation = e.touches[0];
     const targetElement = document.elementFromPoint(touchLocation.clientX, touchLocation.clientY);
@@ -425,7 +420,7 @@ function handleTouchMove(e) {
 }
 
 function handleTouchEnd(e) {
-    logMe("Touch end: " + e.target.textContent);
+    console.log("Touch end: " + e.target.textContent);
     e.preventDefault(); // Prevent the default touch behavior
     const touchLocation = e.changedTouches[0];
     const targetElement = document.elementFromPoint(touchLocation.clientX, touchLocation.clientY);
@@ -434,7 +429,7 @@ function handleTouchEnd(e) {
         return;
     }
     if (!$(targetElement).hasClass("box")) {
-        logMe("Dragged into no-mans land... ignoring");
+        console.log("Dragged into no-mans land... ignoring");
         cleanupAfterDrag();
         return;
     }
@@ -442,7 +437,7 @@ function handleTouchEnd(e) {
     if (targetElement && draggedElement !== targetElement) {
         swapBoxes(draggedElement, targetElement);
     } else if (e.timeStamp - touchStart < 300) {
-        logMe("This was a click not a touch");
+        console.log("This was a click not a touch");
         var div = e.target;
         const boxId = $(div).data('boxId');
         const boxData = boxes.find(box => box.boxId == boxId);
@@ -450,7 +445,7 @@ function handleTouchEnd(e) {
             toggleBoxColor(div, boxData);
         }
     } else {
-        logMe("This was an aborted drag");
+        console.log("This was an aborted drag");
     }
     cleanupAfterDrag();
 
@@ -462,19 +457,19 @@ function cleanupAfterDrag() {
 }
 
 function handleDragStart(e) {
-    logMe("Drag start: " + e.target.textContent);
+    console.log("Drag start: " + e.target.textContent);
     draggedElement = e.target; // Track the dragged element
     $(e.target).addClass('dragging');
 }
 
 function handleDragEnd(e) {
-    logMe("Drag end: " + e.target.textContent);
+    console.log("Drag end: " + e.target.textContent);
     $(e.target).removeClass('dragging');
     clearOverlapping();
 }
 
 function handleDragOver(e) {
-    logMe("Drag over: " + e.target.textContent);
+    console.log("Drag over: " + e.target.textContent);
     e.preventDefault(); // Allow dropping
     clearOverlapping();
     if (e.target !== draggedElement) {
@@ -483,7 +478,7 @@ function handleDragOver(e) {
 }
 
 function handleDragLeave(e) {
-    logMe("Drag leave: " + e.target.textContent);
+    console.log("Drag leave: " + e.target.textContent);
     e.preventDefault();
     if (e.target !== draggedElement) {
         clearOverlapping();
@@ -491,7 +486,7 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e, draggedElement, _grid) {
-    logMe("Drop: " + e.target.textContent);
+    console.log("Drop: " + e.target.textContent);
     e.preventDefault();
     const targetElement = e.target;
     if (draggedElement !== targetElement) {
@@ -510,10 +505,10 @@ function clearOverlapping() {
 function attachBoxEvents(div, boxData, _grid) {
     $(div).on('click', function () {
         if (!boxData.confirmed) {
-            logMe("Click: " + div.textContent);
+            console.log("Click: " + div.textContent);
             toggleBoxColor(div, boxData, ["white", "yellow", "green", "blue", "purple"]);
         } else {
-            logMe("Clicked on locked box: " + div.textContent);
+            console.log("Clicked on locked box: " + div.textContent);
         }
 
     });

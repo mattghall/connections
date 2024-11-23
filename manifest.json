@@ -4,8 +4,8 @@
     "description": "Solve Connections Puzzles! This tool helps by allowing you to plan all moves before submitting. No more missing tricky categories.",
     "start_url": "/index.html",
     "display": "minimal-ui",
-    "background_color": "#038285",
-    "theme_color": "#073637",
+    "background_color": "#073637",
+    "theme_color": "#038285",
     "icons": [
       {
         "src": "img/android-chrome-192x192.png",

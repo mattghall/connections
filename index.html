@@ -40,6 +40,9 @@
 </head>
 
 <body>
+    <div id="loading-overlay">
+        <img src="img/connections.gif" alt="Loading...">
+    </div>
     <div class="container mt-5 mt-md-3">
         <div class="row">
             <div class="col-12 col-lg-6 offset-lg-3">
@@ -102,14 +105,11 @@
 
     <div id="footer-row" class="row justify-content-center bg-dark text-white">
         <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-            connections.trailmatt.com - <span class="version-span">1.0.1</span>
+            connections.trailmatt.com - <span class="version-span">1.0.2</span>
         </div>
         <div class="col-4 text-center px-1 px-md-2 pt-1 fileVersions" style="display: none">
             main.js <span id="main-version-span">x.x</span><br />
             style.css <span id="style-version-span"></span>
-        </div>
-        <div class="col-8 text-center px-1 px-md-2 pt-1 fileVersions logDivs" style="display: none">
-            <div id="logs" style="margin-top: 0;">Logs go here</div>
         </div>
         <div class="social text-center col-12 px-1 px-md-2 pb-1">
             <section>
@@ -126,6 +126,20 @@
             </section>
         </div>
     </div>
+
+    <script>
+        function startLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+
+        function endLoading() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        // Call endLoading() when the page has fully loaded
+        window.onload = endLoading;
+    </script>
+
 </body>
 
 </html>
